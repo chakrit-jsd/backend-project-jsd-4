@@ -11,7 +11,11 @@ const localStrategy = new Strategy({
     if (!user) {
       throw {resError: [404, 'Email Not Found']}
     }
-    await user.comparePassword(password)
+    const result = await user.comparePassword(password)
+    if (!result) {
+      throw {resError: [404, 'Password Incorrect']}
+    }
+
     next(null, user)
   } catch (error) {
     next(error)

@@ -33,7 +33,7 @@ appMiddlewares.use(cors({
   origin: true,
   credentials: true
 }))
-console.log(process.env.CLIENT_ORIGIN)
+// console.log(process.env.CLIENT_ORIGIN)
 // content-type urlencoded and JSON
 appMiddlewares.use(express.urlencoded({ extended: true }))
 appMiddlewares.use(express.json({ limit: '11mb'}))

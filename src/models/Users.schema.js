@@ -108,9 +108,6 @@ UsersSchema.pre('updateOne', preSetPassword)
 
 UsersSchema.methods.comparePassword = async function (password) {
   const result = await bcrypt.compare(password, this.password)
-  if (!result) {
-    throw {resError: [404, 'Password Incorrect']}
-  }
   return result
 }
 
