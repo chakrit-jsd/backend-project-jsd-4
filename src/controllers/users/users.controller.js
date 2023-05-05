@@ -18,8 +18,8 @@ const putProfileEdit = async (req, res, next) => {
     const pathSmall = path.join(__dirname, `../../..${urlSmall}`)
 
     await sharp(Buffer.from(imgData.split(',')[1], 'base64'))
-      .resize(200, 200)
-      .jpeg({ quality: 80 })
+      .resize(300, 300)
+      .jpeg({ quality: 90 })
       .toFile(pathNormal)
 
     await sharp(pathNormal)
@@ -42,7 +42,7 @@ const putProfileEdit = async (req, res, next) => {
   // console.log(req.user)
   try {
     const user = await req.user.save()
-    console.log(user)
+    // console.log(user)
     res.status(201).json({user: user})
   } catch (error) {
     next(error)

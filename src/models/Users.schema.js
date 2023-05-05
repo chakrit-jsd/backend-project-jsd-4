@@ -14,10 +14,6 @@ const UsersSchema = new Schema({
     type: String,
     require: true
   },
-  profilename: {
-    type: String,
-    max: 20
-  },
   aboutme: {
     type: String,
     max: 200
@@ -40,6 +36,10 @@ const UsersSchema = new Schema({
     min: 4,
     max: 20,
   },
+  profilename: {
+    type: String,
+    max: 20
+  },
   birthdate: {
     type: Date,
     require: true,
@@ -61,7 +61,6 @@ const UsersSchema = new Schema({
     type: String,
     get (url) {
       if (!url) return 'https://via.placeholder.com/150'
-      console.log(url)
       return url
     }
   },
@@ -69,9 +68,6 @@ const UsersSchema = new Schema({
   smallImgUrl: {
     type: String
   },
-
-  following: [{ ref: 'Users', type: Schema.Types.ObjectId }],
-  follower: [{ ref: 'Users', type: Schema.Types.ObjectId }],
 
   createAt: {
     type: Date,
@@ -91,6 +87,18 @@ const UsersSchema = new Schema({
 
 UsersSchema.virtual('posts', {
   ref: 'Cards',
+  localField: '_id',
+  foreignField: 'author'
+})
+
+UsersSchema.virtual('follower', {
+  ref: 'Follow',
+  localField: '_id',
+  foreignField: 'target'
+})
+
+UsersSchema.virtual('following', {
+  ref: 'Follow',
   localField: '_id',
   foreignField: 'author'
 })
