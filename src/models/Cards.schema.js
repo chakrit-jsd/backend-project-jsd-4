@@ -62,6 +62,7 @@ CardsSchema.virtual('likedCount',
   ...LikedOption,
   count: true
 })
+CardsSchema.virtual('isLiked',LikedOption)
 
 
 
