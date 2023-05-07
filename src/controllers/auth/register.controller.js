@@ -8,6 +8,7 @@ const postRegister = async (req, res, next) => {
 
   try {
     req.body.createAt = Date.now()
+
     const user = await Users.create(req.body)
     if (!user) return next([])
     return res.status(201).json({

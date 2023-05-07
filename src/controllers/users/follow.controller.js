@@ -1,15 +1,28 @@
 const Users = require('../../models/Users.schema')
-const Follow = require('../../models/Follow.schema')
+const Follows = require('../../models/Follow.schema')
 
 const postFollow = async (req, res, next) => {
-  const resC = await Follow.create({
-    author: '644e3c91b997cb1cbe5c02e7',
-    target: '644fb21c737ad0885d33af54'
-  })
 
-  console.log(resC)
+  try {
+    const followDel = await Follows.findOneAndDelete({
+      author: req.user._id,
+      target: req.body.userId
+    })
+    // console.log(followDel)
+    if (followDel) return res.status(200).json({message: 'Unfollowing'})
 
-  res.status(201).json({message: 'Follwing Done'})
+    const followCreate = await Follows.create({
+      author: req.user._id,
+      target: req.body.userId
+    })
+
+    // console.log(followCreate)
+
+    res.status(201).json({message: 'Following'})
+
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {

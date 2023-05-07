@@ -1,4 +1,5 @@
 const Cards = require('../../models/Cards.schema')
+const Liked = require('../../models/Liked.schema')
 const path = require('path')
 const sharp = require('sharp')
 const fs = require('fs')
@@ -92,6 +93,8 @@ const deleteCards = async (req, res, next) => {
     if(!card) {
       throw {resError: [404, 'Card Activity Not Found']}
     }
+
+    await Liked.deleteMany({ target: card._id })
 
     const delUrl = card.imgUrl.replace(process.env.SERVER_ORIGIN, '')
     const delPath = path.join(__dirname, `../../..${delUrl}`)

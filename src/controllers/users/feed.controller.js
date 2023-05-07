@@ -1,4 +1,6 @@
 const Cards = require("../../models/Cards.schema")
+const Users = require("../../models/Users.schema")
+
 
 const getFeedHome = async (req, res, next) => {
 
@@ -7,7 +9,7 @@ const getFeedHome = async (req, res, next) => {
       path: 'posts',
       populate: [
         { path: 'author', select: 'profilename smallImgUrl' },
-        { path: 'isLiked', author: req.user._id },
+        { path: 'isLiked', match: { author: { $eq: req.user._id }}, select: 'author'},
         { path: 'likedCount'},
       ],
       options: {
@@ -23,7 +25,9 @@ const getFeedHome = async (req, res, next) => {
         getters: true,
         transform: (doc, ret) => {
           if (ret.isLiked) {
-            ret.isLiked = ret.isLiked.includes(req.user._id)
+            ret.isLiked = ret.isLiked.some((like) => {
+              return like.author.equals(req.user._id)
+            })
           }
           delete ret.id
           delete ret.__v
@@ -31,7 +35,7 @@ const getFeedHome = async (req, res, next) => {
       }})
       posts.push(ob)
     }
-    console.log(posts)
+
     res.status(200).json({ posts: posts })
 
   } catch (error) {
@@ -46,11 +50,11 @@ const getFeedAll = async (req, res, next) => {
       return user.target
     } )
     arr.push(req.user._id)
-    console.log(arr)
+    // console.log(arr)
     const targetPost = await Cards.find({author: arr})
     .populate([
       { path: 'author', select: 'profilename smallImgUrl' },
-      { path: 'isLiked', author: req.user._id },
+      { path: 'isLiked', match: { author: { $eq: req.user._id }}, select: 'author'},
       { path: 'likedCount'},
     ])
     .sort({createAt: -1})
@@ -61,12 +65,16 @@ const getFeedAll = async (req, res, next) => {
         getters: true,
         transform: (doc, ret) => {
           if (ret.isLiked) {
-            ret.isLiked = ret.isLiked.includes(req.user._id)
+            ret.isLiked = ret.isLiked.some((like) => {
+              return like.author.equals(req.user._id)
+            })
           }
+          // console.log(ret)
           delete ret.id
           delete ret.__v
           return ret
       }})
+
       postsAll.push(postObj)
     }
 
@@ -77,8 +85,52 @@ const getFeedAll = async (req, res, next) => {
   }
 }
 
+const getAnotherFeed = async (req, res, next) => {
+  const userId = req.params.userId
+  try {
+    if (userId.length !== 24) throw {resError: [404, 'User Not Found']}
+    const user = await Users.findById(userId)
+    if (!user) throw {resError: [404, 'User Not Found']}
+
+    await user.populate({
+      path: 'posts',
+      populate: [
+        { path: 'author', select: 'profilename smallImgUrl' },
+        { path: 'isLiked', match: { author: { $eq: req.user._id }}, select: 'author'},
+        { path: 'likedCount'},
+      ],
+      options: {
+        sort: { createAt: -1 },
+      }
+    })
+
+    const posts = []
+    for (const i of user.posts) {
+      const ob = i.toObject({
+        getters: true,
+        transform: (doc, ret) => {
+          if (ret.isLiked) {
+            ret.isLiked = ret.isLiked.some((like) => {
+              return like.author.equals(req.user._id)
+            })
+          }
+          delete ret.id
+          delete ret.__v
+          return ret
+      }})
+      posts.push(ob)
+    }
+
+    res.status(200).json({ posts: posts })
+
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 module.exports = {
   getFeedHome,
-  getFeedAll
+  getFeedAll,
+  getAnotherFeed
 }

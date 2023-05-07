@@ -91,17 +91,19 @@ UsersSchema.virtual('posts', {
   foreignField: 'author'
 })
 
-UsersSchema.virtual('follower', {
-  ref: 'Follow',
-  localField: '_id',
-  foreignField: 'target'
-})
-
 UsersSchema.virtual('following', {
   ref: 'Follow',
   localField: '_id',
   foreignField: 'author'
 })
+
+const followerOp = {
+  ref: 'Follow',
+  localField: '_id',
+  foreignField: 'target'
+}
+UsersSchema.virtual('follower', followerOp)
+UsersSchema.virtual('isFollowing', followerOp)
 
 
 const preSetPassword = async function (next) {
