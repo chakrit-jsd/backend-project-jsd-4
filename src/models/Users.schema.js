@@ -56,7 +56,6 @@ const UsersSchema = new Schema({
     type: String,
     enum: provincesThailand
   },
-
   profileImgUrl: {
     type: String,
     get (url) {

@@ -16,8 +16,6 @@ const postFollow = async (req, res, next) => {
       target: req.body.userId
     })
 
-    // console.log(followCreate)
-
     res.status(201).json({message: 'Following'})
 
   } catch (error) {
