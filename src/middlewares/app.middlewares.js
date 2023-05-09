@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
 const ms = require('ms')
@@ -37,6 +38,7 @@ appMiddlewares.use(cors({
 // content-type urlencoded and JSON
 appMiddlewares.use(express.urlencoded({ extended: true }))
 appMiddlewares.use(express.json({ limit: '11mb'}))
+// appMiddlewares.use(cookieParser())
 appMiddlewares.use(session(sessionOptions))
 appMiddlewares.use(passport.initialize())
 appMiddlewares.use(passport.session())

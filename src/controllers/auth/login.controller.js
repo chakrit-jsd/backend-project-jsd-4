@@ -7,6 +7,7 @@ const getLogin = (req, res) => {
 
 const postLogin = (req, res, next) => {
   passport.authenticate('local', (err, user) => {
+    console.log('login')
     if (err) {
       return next(err)
     }

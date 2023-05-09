@@ -51,7 +51,11 @@ const getMe = async (req, res, next) => {
 const getAnother = async (req, res, next) => {
   const userId = req.params.userId
   try {
+
     if (userId.length !== 24) throw {resError: [404, 'User Not Found']}
+
+    if (req.user._id.equals(userId)) throw {resError: [307, 'Page Is Same Your Profile']}
+
     const user = await Users.findById(userId)
       .populate([{
           path: 'following',

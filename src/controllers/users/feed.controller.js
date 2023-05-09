@@ -3,6 +3,9 @@ const Users = require("../../models/Users.schema")
 
 
 const getFeedHome = async (req, res, next) => {
+  const page = req.params.page
+  const limitPerpage = 3
+  const data = {}
 
   try {
     await req.user.populate({
@@ -13,6 +16,8 @@ const getFeedHome = async (req, res, next) => {
         { path: 'likedCount'},
       ],
       options: {
+        skip: limitPerpage * (page - 1),
+        limit: limitPerpage,
         sort: { createAt: -1 },
       }
     })
@@ -36,7 +41,15 @@ const getFeedHome = async (req, res, next) => {
       posts.push(ob)
     }
 
-    res.status(200).json({ posts: posts })
+    data.posts = posts
+
+    if (posts.length !== limitPerpage) {
+      data.next = false
+    } else {
+      data.next = true
+    }
+
+    res.status(200).json(data)
 
   } catch (error) {
     next(error)
@@ -44,6 +57,10 @@ const getFeedHome = async (req, res, next) => {
 }
 
 const getFeedAll = async (req, res, next) => {
+  const page = req.params.page
+  const limitPerpage = 3
+  const data = {}
+
   try {
     await req.user.populate({path: 'following', select: 'target'})
     const arr = req.user.following.map((user) => {
@@ -57,6 +74,8 @@ const getFeedAll = async (req, res, next) => {
       { path: 'isLiked', match: { author: { $eq: req.user._id }}, select: 'author'},
       { path: 'likedCount'},
     ])
+    .skip(limitPerpage * (page - 1))
+    .limit(limitPerpage)
     .sort({createAt: -1})
 
     const postsAll = []
@@ -78,7 +97,15 @@ const getFeedAll = async (req, res, next) => {
       postsAll.push(postObj)
     }
 
-    res.status(200).json({ posts: postsAll })
+    data.posts = postsAll
+
+    if (postsAll.length !== limitPerpage) {
+      data.next = false
+    } else {
+      data.next = true
+    }
+
+    res.status(200).json(data)
 
   } catch (error) {
     next(error)
@@ -87,8 +114,16 @@ const getFeedAll = async (req, res, next) => {
 
 const getAnotherFeed = async (req, res, next) => {
   const userId = req.params.userId
+  const page = req.params.page
+  const limitPerpage = 3
+  const data = {}
+
   try {
+
     if (userId.length !== 24) throw {resError: [404, 'User Not Found']}
+
+    if (req.user._id.equals(userId)) throw {resError: [307, 'Page Is Same Your Profile']}
+
     const user = await Users.findById(userId)
     if (!user) throw {resError: [404, 'User Not Found']}
 
@@ -100,6 +135,8 @@ const getAnotherFeed = async (req, res, next) => {
         { path: 'likedCount'},
       ],
       options: {
+        skip: limitPerpage * (page - 1),
+        limit: limitPerpage,
         sort: { createAt: -1 },
       }
     })
@@ -121,9 +158,18 @@ const getAnotherFeed = async (req, res, next) => {
       posts.push(ob)
     }
 
-    res.status(200).json({ posts: posts })
+    data.posts = posts
+
+    if (posts.length !== limitPerpage) {
+      data.next = false
+    } else {
+      data.next = true
+    }
+
+    res.status(200).json(data)
 
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }

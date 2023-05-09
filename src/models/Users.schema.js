@@ -7,7 +7,7 @@ const UsersSchema = new Schema({
   email: {
     type: String,
     require: true,
-    unique: [true, 'err'],
+    unique: true,
     lowercase: true
   },
   password: {
@@ -50,7 +50,7 @@ const UsersSchema = new Schema({
   gender: {
     type: String,
     enum: ['male', 'female', 'other'],
-    default: 'none'
+    default: 'other'
   },
   city: {
     type: String,
@@ -63,25 +63,21 @@ const UsersSchema = new Schema({
       return url
     }
   },
-
   smallImgUrl: {
     type: String
   },
-
   createAt: {
     type: Date,
     get (date) {
       return DateTime.fromJSDate(date)
     }
   },
-
   updateAt: {
     type: Date,
     get (date) {
       return DateTime.fromJSDate(date)
     }
   }
-
 })
 
 UsersSchema.virtual('posts', {
@@ -101,9 +97,9 @@ const followerOp = {
   localField: '_id',
   foreignField: 'target'
 }
+
 UsersSchema.virtual('follower', followerOp)
 UsersSchema.virtual('isFollowing', followerOp)
-
 
 const preSetPassword = async function (next) {
   if (this.isModified('password')) {

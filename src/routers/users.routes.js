@@ -5,10 +5,10 @@ const follows = require('../controllers/users/follow.controller')
 
 router.get('/', users.getMe)
 router.get('/another/:userId', users.getAnother)
-router.get('/another/:userId/feed', feeds.getAnotherFeed)
+router.get('/another/:userId/feed/:page', feeds.getAnotherFeed)
 
-router.get('/feed/gethome', feeds.getFeedHome)
-router.get('/feed/getall', feeds.getFeedAll)
+router.get('/feed/gethome/:page', feeds.getFeedHome)
+router.get('/feed/getall/:page', feeds.getFeedAll)
 
 router.post('/follows', follows.postFollow)
 

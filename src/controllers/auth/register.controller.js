@@ -10,7 +10,8 @@ const postRegister = async (req, res, next) => {
     req.body.createAt = Date.now()
 
     const user = await Users.create(req.body)
-    if (!user) return next([])
+
+    if (!user) return next({resError: [500, 'Something Went Wrong']})
     return res.status(201).json({
       message: `Register ${user.email} Success`
     })
@@ -19,7 +20,9 @@ const postRegister = async (req, res, next) => {
     if (error._message) {
       return next({resError: [422, error._message]})
     }
+
     if (error.code === 11000) {
+      // res.status(409).json({message: 'This ${req.body.email} is already registered'})
       return next({resError: [409, `This ${req.body.email} is already registered`]})
     }
     next(error)

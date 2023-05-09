@@ -65,6 +65,4 @@ CardsSchema.virtual('likedCount',
 CardsSchema.virtual('isLiked',LikedOption)
 
 
-
-
 module.exports = model('Cards', CardsSchema)
