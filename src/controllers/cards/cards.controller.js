@@ -1,5 +1,6 @@
 const Cards = require('../../models/Cards.schema')
 const Liked = require('../../models/Liked.schema')
+const getCard = require('../../services/getSingleCard')
 const path = require('path')
 const sharp = require('sharp')
 const fs = require('fs')
@@ -29,9 +30,10 @@ const postCreateCards = async (req, res, next) => {
       imgUrl: process.env.SERVER_ORIGIN + urlImg,
       createAt: Date.now()
     })
-    console.log(card)
 
-    res.status(201).json({message: 'Create Activity Success'})
+    const post = await getCard(card, req.user._id)
+
+    res.status(201).json({ post: post })
 
   } catch (error) {
     next(error)
@@ -39,10 +41,10 @@ const postCreateCards = async (req, res, next) => {
 }
 
 const putEditCards = async (req, res, next) => {
-  // console.log(req.body)
+
   try {
     const card = await Cards.findById(req.body.cardId)
-    // console.log(!card.author.equals('644fb21c737ad0885d33af54'))
+
     if(!card || !card.author.equals(req.user._id)) {
       throw {resError: [404, 'Card Activity Not Found']}
     }
@@ -71,11 +73,11 @@ const putEditCards = async (req, res, next) => {
     card.duration = req.body.duration
     card.updateAt = Date.now()
 
-    const cardRes = await card.save()
+    await card.save()
 
-    if (!cardRes) throw new Error()
+    const post = await getCard(card, req.user._id)
 
-    res.status(201).json({message: 'Edit Activity Success'})
+    res.status(201).json({ post: post})
 
   } catch (error) {
     next(error)
@@ -89,7 +91,7 @@ const deleteCards = async (req, res, next) => {
          _id: req.params.cardId,
          author: req.user._id
       })
-    // console.log(card)
+
     if(!card) {
       throw {resError: [404, 'Card Activity Not Found']}
     }
@@ -102,7 +104,7 @@ const deleteCards = async (req, res, next) => {
     await fs.promises.unlink(delPath)
     // ระวังอย่าใส่ path unlink มั่วซั่ว
 
-    res.status(200).json({message: 'Activity Deleted!'})
+    res.status(200).json({ post: { _id : card._id } })
 
   } catch (error) {
     next(error)

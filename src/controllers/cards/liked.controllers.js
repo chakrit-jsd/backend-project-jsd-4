@@ -1,8 +1,10 @@
 const Cards = require('../../models/Cards.schema')
 const Liked = require('../../models/Liked.schema')
+const getCard = require('../../services/getSingleCard')
 
 
 const postLiked = async (req, res, next) => {
+
   try {
     const card = await Cards.findById(req.body.cardId)
 
@@ -13,10 +15,11 @@ const postLiked = async (req, res, next) => {
       target: req.body.cardId
     })
 
-    // console.log('disliked', isLiked)
 
     if (isLiked) {
-      return res.status(200).json({ message: 'Disliked' })
+      const post = await getCard(card, req.user._id)
+
+      return res.status(200).json({ post: post })
     }
 
     const liked = await Liked.create({
@@ -24,9 +27,11 @@ const postLiked = async (req, res, next) => {
       target: req.body.cardId
     })
 
-    // console.log('Liked', liked)
+    if (liked) {
+      const post = await getCard(card, req.user._id)
 
-    res.status(201).json({ message: 'Liked' })
+      return res.status(201).json({ post: post })
+    }
 
   } catch (error) {
     next(error)
