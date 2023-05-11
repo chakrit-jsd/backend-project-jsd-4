@@ -4,15 +4,15 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
 const ms = require('ms')
+const useRedisConnect = require('../databases/redis')
+// const { createClient } = require('redis')
+// const client = createClient({ url: process.env.REDIS_SERVER })
 
-const { createClient } = require('redis')
-const client = createClient({ url: process.env.REDIS_SERVER })
+// client.connect().catch(console.error)
 
-client.connect().catch(console.error)
+// const RedisStore = require('connect-redis').default
 
-const RedisStore = require('connect-redis').default
-
-const useRedisConnect = new RedisStore({ client })
+// const useRedisConnect = new RedisStore({ client })
 
 const sessionOptions = {
   store: useRedisConnect,
