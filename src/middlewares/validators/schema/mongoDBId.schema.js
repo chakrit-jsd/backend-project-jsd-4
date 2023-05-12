@@ -7,9 +7,9 @@ const mongoDBIdSchema = Joi.object({
     .string()
     .custom(
       (value, helpers) => {
-        console.log(value)
+        // console.log(value)
         const filtered = mongo.ObjectId.isValid(value)
-        console.log(filtered)
+        // console.log(filtered)
         return !filtered ? helpers.error("any.invalid") : value;
       },
         "invalid objectId" )

@@ -22,7 +22,7 @@ const postLogin = (req, res, next) => {
 
 const getLogout = (req, res) => {
   req.logout((err) => {
-    if (err) throw err
+    if (err) next(err)
     res.status(200).json({message: 'Logout Success'})
   })
 }

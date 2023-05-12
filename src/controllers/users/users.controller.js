@@ -97,7 +97,12 @@ const getAnother = async (req, res, next) => {
         return ret
       }
     })
-    data.thisme = req.user._id
+
+    data.thisme = {
+      _id: req.user._id,
+      profilename: req.user.profilename || `${req.user.firstname}  ${req.user.lastname}`,
+      smallImgUrl: req.user.smallImgUrl
+    }
     // console.log(data.follower[0].author)
     res.status(200).json({ user: data })
   } catch (error) {

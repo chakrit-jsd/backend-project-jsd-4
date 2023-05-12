@@ -27,6 +27,7 @@ const postCreateCards = async (req, res, next) => {
       description: req.body.description,
       activity: req.body.activity,
       duration: req.body.duration,
+      dateactivity: req.body.dateactivity,
       imgUrl: process.env.SERVER_ORIGIN + urlImg,
       createAt: Date.now()
     })
@@ -71,6 +72,7 @@ const putEditCards = async (req, res, next) => {
     card.description = req.body.description
     card.activity = req.body.activity
     card.duration = req.body.duration
+    card.dateactivity = req.body.dateactivity
     card.updateAt = Date.now()
 
     await card.save()

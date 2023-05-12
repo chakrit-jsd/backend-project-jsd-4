@@ -28,6 +28,14 @@ const cardSchema = Joi.object({
     .max(180)
     .positive(),
 
+  dateactivity: Joi
+    .date()
+    .required()
+    .max(new Date())
+    .messages({
+      'date.max': 'Invalid Date'
+    }),
+
   file: Joi
     .any()
 })

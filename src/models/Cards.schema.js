@@ -29,6 +29,17 @@ const CardsSchema = new Schema({
     type: String,
     require: true
   },
+  dateactivity: {
+    type: Date,
+    require: true,
+    get (date) {
+      const d = DateTime.fromJSDate(date)
+      return {
+        date: date,
+        dateFormat: DateTime.fromISO(d).toFormat('dd LLLL')
+      }
+    }
+  },
 
   createAt: {
     type: Date,

@@ -9,9 +9,9 @@ const validateBody = (schema) => async (req, res, next) => {
   try {
     await schema.validateAsync(req.body)
     if (req.body.file) {
-      console.log('file')
+      // console.log('file')
       const result = validateFileBase64(req.body.file)
-      console.log(result)
+      // console.log(result)
       if (!result) throw {message: 'Invalid Image'}
     }
     next()

@@ -78,15 +78,20 @@ const userSchema = Joi.object({
   profilename: Joi
     .string()
     .max(30)
+    .allow('', null)
+    .optional()
     .trim(),
 
   aboutme: Joi
     .string()
     .max(200)
+    .allow('', null)
+    .optional()
     .trim(),
 
   interest: Joi
     .string()
+    .allow('', null)
     .valid('hiit', 'pilates', 'strength', 'weight', 'yoga')
     .messages({
       'any.only': 'Invalid Activity'
@@ -94,16 +99,19 @@ const userSchema = Joi.object({
 
   weight: Joi
     .number()
+    .allow('', null)
     .max(200)
     .positive(),
 
   height: Joi
     .number()
+    .allow('', null)
     .max(300)
     .positive(),
 
   file: Joi
     .string()
+    .allow('', null)
 
 })
 
