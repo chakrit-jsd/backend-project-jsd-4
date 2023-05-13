@@ -20,7 +20,7 @@ const UsersSchema = new Schema({
   },
   interest: {
     type: String,
-    enum: ['hiit', 'pilates', 'strength', 'weight', 'yoga']
+    enum: ['Hiit', 'Pilates', 'Strength', 'Weight', 'Yoga']
   },
   weight: Number,
   height: Number,

@@ -109,6 +109,7 @@ const deleteCards = async (req, res, next) => {
     res.status(200).json({ post: { _id : card._id } })
 
   } catch (error) {
+
     next(error)
   }
 

@@ -18,7 +18,7 @@ const CardsSchema = new Schema({
   },
   activity: {
     type: String,
-    enum: ['hiit', 'pilates', 'strength', 'weight', 'yoga'],
+    enum: ['Hiit', 'Pilates', 'Strength', 'Weight', 'Yoga'],
     required: true
   },
   duration: {

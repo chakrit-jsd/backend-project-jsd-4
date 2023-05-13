@@ -92,7 +92,7 @@ const userSchema = Joi.object({
   interest: Joi
     .string()
     .allow('', null)
-    .valid('hiit', 'pilates', 'strength', 'weight', 'yoga')
+    .valid('Hiit', 'Pilates', 'Strength', 'Weight', 'Yoga')
     .messages({
       'any.only': 'Invalid Activity'
     }),

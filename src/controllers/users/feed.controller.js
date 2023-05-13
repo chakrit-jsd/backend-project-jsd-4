@@ -65,7 +65,7 @@ const getFeedAll = async (req, res, next) => {
     await req.user.populate({path: 'following', select: 'target'})
     const arr = req.user.following.map((user) => {
       return user.target
-    } )
+    })
     arr.push(req.user._id)
     // console.log(arr)
     const targetPost = await Cards.find({author: arr})

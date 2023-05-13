@@ -16,7 +16,7 @@ const cardSchema = Joi.object({
   activity: Joi
     .string()
     .required()
-    .valid('hiit', 'pilates', 'strength', 'weight', 'yoga')
+    .valid('Hiit', 'Pilates', 'Strength', 'Weight', 'Yoga')
     .messages({
       'any.only': 'Invalid Activity'
     }),

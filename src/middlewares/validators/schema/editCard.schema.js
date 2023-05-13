@@ -3,10 +3,10 @@ const mongo = require("mongodb")
 
 const editCardSchema = Joi.object({
   title: Joi
-  .string()
-  .required()
-  .max(50)
-  .trim(),
+    .string()
+    .required()
+    .max(50)
+    .trim(),
 
   description: Joi
     .string()
@@ -17,7 +17,7 @@ const editCardSchema = Joi.object({
   activity: Joi
     .string()
     .required()
-    .valid('hiit', 'pilates', 'strength', 'weight', 'yoga')
+    .valid('Hiit', 'Pilates', 'Strength', 'Weight', 'Yoga')
     .messages({
       'any.only': 'Invalid Activity'
     }),
@@ -41,16 +41,16 @@ const editCardSchema = Joi.object({
     .any(),
 
   cardId: Joi
-  .string()
-  .custom(
-    (value, helpers) => {
-      console.log(value)
-      const filtered = mongo.ObjectId.isValid(value)
-      console.log(filtered)
-      return !filtered ? helpers.error("any.invalid") : value;
-    },
-      "invalid objectId" )
-  .required()
+    .string()
+    .custom(
+      (value, helpers) => {
+        console.log(value)
+        const filtered = mongo.ObjectId.isValid(value)
+        console.log(filtered)
+        return !filtered ? helpers.error("any.invalid") : value;
+      },
+        "invalid objectId" )
+    .required()
 
 })
 
