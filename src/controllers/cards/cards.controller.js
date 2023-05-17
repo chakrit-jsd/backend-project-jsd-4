@@ -37,6 +37,7 @@ const postCreateCards = async (req, res, next) => {
     res.status(201).json({ post: post })
 
   } catch (error) {
+
     next(error)
   }
 }
@@ -114,7 +115,6 @@ const deleteCards = async (req, res, next) => {
   }
 
 }
-
 
 module.exports = {
   postCreateCards,

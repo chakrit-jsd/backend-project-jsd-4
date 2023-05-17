@@ -13,5 +13,4 @@ const LikedSchema = new Schema({
   }
 }, { timestamps: true })
 
-
 module.exports = model('Liked', LikedSchema)
