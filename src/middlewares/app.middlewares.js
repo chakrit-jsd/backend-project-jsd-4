@@ -6,23 +6,15 @@ const session = require('express-session')
 const passport = require('passport')
 const ms = require('ms')
 const useRedisConnect = require('../databases/redis')
-// const { createClient } = require('redis')
-// const client = createClient({ url: process.env.REDIS_SERVER })
-
-// client.connect().catch(console.error)
-
-// const RedisStore = require('connect-redis').default
-
-// const useRedisConnect = new RedisStore({ client })
 
 const sessionOptions = {
   store: useRedisConnect,
   secret: process.env.SECRET_KEY,
   cookie: {
     httpOnly: true,
-    // secure: isProd,
+    secure: true,
     maxAge: ms('7d'),
-    // sameSite: 'none'
+    sameSite: 'none'
   },
   rolling: true,
   saveUninitialized: false,
@@ -49,6 +41,5 @@ appMiddlewares.use(passport.session())
 //   res.header('Access-Control-Allow-Credentials', 'true')
 //   next()
 // })
-
 
 module.exports = appMiddlewares

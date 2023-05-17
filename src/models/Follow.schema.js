@@ -13,5 +13,4 @@ const FollowSchema = new Schema({
   }
 }, { timestamps: true })
 
-
 module.exports = model('Follow', FollowSchema)
