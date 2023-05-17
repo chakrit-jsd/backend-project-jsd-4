@@ -1,17 +1,19 @@
 const express = require('express')
 const cors = require('cors')
+const compression = require('compression')
+const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
 const ms = require('ms')
+const useRedisConnect = require('../databases/redis')
+// const { createClient } = require('redis')
+// const client = createClient({ url: process.env.REDIS_SERVER })
 
-const { createClient } = require('redis')
-const client = createClient({ url: process.env.REDIS_SERVER })
+// client.connect().catch(console.error)
 
-client.connect().catch(console.error)
+// const RedisStore = require('connect-redis').default
 
-const RedisStore = require('connect-redis').default
-
-const useRedisConnect = new RedisStore({ client })
+// const useRedisConnect = new RedisStore({ client })
 
 const sessionOptions = {
   store: useRedisConnect,
@@ -35,8 +37,10 @@ appMiddlewares.use(cors({
 }))
 // console.log(process.env.CLIENT_ORIGIN)
 // content-type urlencoded and JSON
+appMiddlewares.use(compression())
 appMiddlewares.use(express.urlencoded({ extended: true }))
 appMiddlewares.use(express.json({ limit: '11mb'}))
+// appMiddlewares.use(cookieParser())
 appMiddlewares.use(session(sessionOptions))
 appMiddlewares.use(passport.initialize())
 appMiddlewares.use(passport.session())

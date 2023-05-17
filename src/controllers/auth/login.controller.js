@@ -7,6 +7,7 @@ const getLogin = (req, res) => {
 
 const postLogin = (req, res, next) => {
   passport.authenticate('local', (err, user) => {
+    console.log('login')
     if (err) {
       return next(err)
     }
@@ -21,7 +22,7 @@ const postLogin = (req, res, next) => {
 
 const getLogout = (req, res) => {
   req.logout((err) => {
-    if (err) throw err
+    if (err) next(err)
     res.status(200).json({message: 'Logout Success'})
   })
 }

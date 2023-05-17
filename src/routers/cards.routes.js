@@ -1,9 +1,15 @@
 const router = require('express').Router()
+const cards = require('../controllers/cards/cards.controller')
+const liked = require('../controllers/cards/liked.controllers')
+const { validateBody, validateParams } = require('../middlewares/validators/validators')
+const editCardSchema = require('../middlewares/validators/schema/editCard.schema')
+const cardSchema = require('../middlewares/validators/schema/_card.schema')
+const idSchema = require('../middlewares/validators/schema/mongoDBId.schema')
 
-router.post('/card/create')
+router.post('/create', validateBody(cardSchema), cards.postCreateCards)
+router.put('/edit', validateBody(editCardSchema), cards.putEditCards)
+router.delete('/delete/:cardId', validateParams(idSchema), cards.deleteCards)
 
-router.put('/:cardId/like')
-router.patch('/:cardId/edit')
-router.delete('/:cardId/delete')
+router.post('/liked', liked.postLiked)
 
 module.exports = router

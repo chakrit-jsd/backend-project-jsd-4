@@ -7,16 +7,12 @@ const UsersSchema = new Schema({
   email: {
     type: String,
     require: true,
-    unique: [true, 'err'],
+    unique: true,
     lowercase: true
   },
   password: {
     type: String,
     require: true
-  },
-  profilename: {
-    type: String,
-    max: 20
   },
   aboutme: {
     type: String,
@@ -24,7 +20,7 @@ const UsersSchema = new Schema({
   },
   interest: {
     type: String,
-    enum: ['hiit', 'pilates', 'strength', 'weight', 'yoga']
+    enum: ['Hiit', 'Pilates', 'Strength', 'Weight', 'Yoga']
   },
   weight: Number,
   height: Number,
@@ -40,6 +36,10 @@ const UsersSchema = new Schema({
     min: 4,
     max: 20,
   },
+  profilename: {
+    type: String,
+    max: 20
+  },
   birthdate: {
     type: Date,
     require: true,
@@ -50,43 +50,34 @@ const UsersSchema = new Schema({
   gender: {
     type: String,
     enum: ['male', 'female', 'other'],
-    default: 'none'
+    default: 'other'
   },
   city: {
     type: String,
     enum: provincesThailand
   },
-
   profileImgUrl: {
     type: String,
     get (url) {
       if (!url) return 'https://via.placeholder.com/150'
-      console.log(url)
       return url
     }
   },
-
   smallImgUrl: {
     type: String
   },
-
-  following: [{ ref: 'Users', type: Schema.Types.ObjectId }],
-  follower: [{ ref: 'Users', type: Schema.Types.ObjectId }],
-
   createAt: {
     type: Date,
     get (date) {
       return DateTime.fromJSDate(date)
     }
   },
-
   updateAt: {
     type: Date,
     get (date) {
       return DateTime.fromJSDate(date)
     }
   }
-
 })
 
 UsersSchema.virtual('posts', {
@@ -95,6 +86,20 @@ UsersSchema.virtual('posts', {
   foreignField: 'author'
 })
 
+UsersSchema.virtual('following', {
+  ref: 'Follow',
+  localField: '_id',
+  foreignField: 'author'
+})
+
+const followerOp = {
+  ref: 'Follow',
+  localField: '_id',
+  foreignField: 'target'
+}
+
+UsersSchema.virtual('follower', followerOp)
+UsersSchema.virtual('isFollowing', followerOp)
 
 const preSetPassword = async function (next) {
   if (this.isModified('password')) {

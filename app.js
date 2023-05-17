@@ -10,7 +10,6 @@ const { PORT } = process.env
 const startServer = async () => {
   try {
     await mongoAtlast()
-    require('./src/middlewares/passposts/usePassport')
     app.listen(PORT, () => {
       console.log(`Server listening on http://localhost:${PORT}/`)
     })

@@ -1,3 +1,4 @@
+const { DateTime } = require('luxon')
 const { Schema, model } = require('mongoose')
 
 const CardsSchema = new Schema({
@@ -8,7 +9,8 @@ const CardsSchema = new Schema({
   },
   title: {
     type: String,
-    max: 50
+    max: 50,
+    required: true
   },
   description: {
     type: String,
@@ -16,14 +18,28 @@ const CardsSchema = new Schema({
   },
   activity: {
     type: String,
-    enum: ['hiit', 'pilates', 'strength', 'weight', 'yoga'],
+    enum: ['Hiit', 'Pilates', 'Strength', 'Weight', 'Yoga'],
     required: true
   },
   duration: {
-    type: Number
+    type: Number,
+    required: true
   },
-
-  liked: [{ ref: 'Users', type: Schema.Types.ObjectId }],
+  imgUrl: {
+    type: String,
+    require: true
+  },
+  dateactivity: {
+    type: Date,
+    require: true,
+    get (date) {
+      const d = DateTime.fromJSDate(date)
+      return {
+        date: date,
+        dateFormat: DateTime.fromISO(d).toFormat('dd LLLL')
+      }
+    }
+  },
 
   createAt: {
     type: Date,
@@ -43,7 +59,21 @@ const CardsSchema = new Schema({
     }
   }
 
-}, { timestamps: true })
+})
+
+const LikedOption = {
+  ref: 'Liked',
+  localField: '_id',
+  foreignField: 'target'
+}
+
+CardsSchema.virtual('liked', LikedOption)
+CardsSchema.virtual('likedCount',
+{
+  ...LikedOption,
+  count: true
+})
+CardsSchema.virtual('isLiked',LikedOption)
 
 
 module.exports = model('Cards', CardsSchema)
