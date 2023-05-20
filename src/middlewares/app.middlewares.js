@@ -11,6 +11,7 @@ const sessionOptions = {
   store: useRedisConnect,
   secret: process.env.SECRET_KEY,
   cookie: {
+//    domain: process.env.CLIENT_ORIGIN,
     httpOnly: true,
     secure: true,
     maxAge: ms('7d'),
@@ -24,8 +25,8 @@ const sessionOptions = {
 const appMiddlewares = express()
 
 appMiddlewares.use(cors({
-  origin: true,
-  credentials: true
+	origin: true,
+	credentials: true
 }))
 // console.log(process.env.CLIENT_ORIGIN)
 // content-type urlencoded and JSON
