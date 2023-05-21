@@ -22,6 +22,13 @@ const sessionOptions = {
   resave: false
 }
 
+if (process.env.PRODUCTION !== 'isProd') {
+  sessionOptions.cookie = {
+      httpOnly: true,
+      maxAge: ms('7d')
+    }
+  }
+
 const appMiddlewares = express()
 
 appMiddlewares.use(cors({

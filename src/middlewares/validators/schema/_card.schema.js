@@ -37,7 +37,7 @@ const cardSchema = Joi.object({
     }),
 
   file: Joi
-    .any()
+    .strip()
 })
 
 

@@ -7,17 +7,21 @@ const validateFileBase64 = (file) => {
 
 const validateBody = (schema) => async (req, res, next) => {
   try {
-    await schema.validateAsync(req.body)
+    let file = ''
     if (req.body.file) {
       // console.log('file')
-      const result = validateFileBase64(req.body.file)
+      // const result = validateFileBase64(req.body.file)
       // console.log(result)
-      if (!result) throw {message: 'Invalid Image'}
+      // if (!result) throw { message: 'Invalid Image' }
+      file = req.body.file
+      req.body.file = ''
     }
+    await schema.validateAsync(req.body)
+    req.body.file = file
     next()
 
   } catch (error) {
-    next({resError: [422, error.message]})
+    next({ resError:  [ 422, error.message ] })
   }
 }
 
@@ -30,7 +34,7 @@ const validateParams = (schema) => async (req, res, next) => {
     next()
 
   } catch (error) {
-    next({resError: [404, 'Not Found']})
+    next({resError: [ 404, 'Not Found' ]})
   }
 }
 

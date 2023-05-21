@@ -1,13 +1,13 @@
 const passport = require("passport")
 
 const getLogin = (req, res) => {
-  console.log('get')
+  // console.log('get')
   res.status(200).end()
 }
 
 const postLogin = (req, res, next) => {
   passport.authenticate('local', (err, user) => {
-    console.log('login')
+    // console.log('login')
     if (err) {
       return next(err)
     }
@@ -20,7 +20,7 @@ const postLogin = (req, res, next) => {
   })(req, res, next)
 }
 
-const getLogout = (req, res) => {
+const getLogout = (req, res, next) => {
   req.logout((err) => {
     if (err) next(err)
     res.status(200).json({message: 'Logout Success'})
