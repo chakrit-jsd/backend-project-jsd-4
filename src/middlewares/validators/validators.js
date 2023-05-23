@@ -27,7 +27,7 @@ const validateBody = (schema) => async (req, res, next) => {
 
 
 const validateParams = (schema) => async (req, res, next) => {
-  const params = req.params.userId || req.params.cardId
+  const params = req.params.userId || req.params.cardId || req.body.cardId
   try {
     await schema.validateAsync({ id: params })
 

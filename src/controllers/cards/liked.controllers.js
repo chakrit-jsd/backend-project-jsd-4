@@ -38,6 +38,30 @@ const postLiked = async (req, res, next) => {
   }
 }
 
+const whoLikedCard = async (req, res, next) => {
+  // console.log(req.params.cardId)
+  try {
+    const card = await Cards
+      .findById(req.params.cardId)
+      .populate({
+        path: 'liked',
+        populate:
+        { path: 'author', select: 'profilename firstname lastname smallImgUrl' }
+      })
+
+    const whoLiked = []
+    for (const who of card.liked) {
+      whoLiked.push(who.author)
+    }
+
+    // console.log(whoLiked)
+    res.status(200).json({ whoLiked: whoLiked })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
-  postLiked
+  postLiked,
+  whoLikedCard
 }
