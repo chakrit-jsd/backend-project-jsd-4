@@ -9,6 +9,7 @@ const idSchema = require('../middlewares/validators/schema/mongoDBId.schema')
 
 router.get('/', users.getMe)
 router.get('/another/:userId', validateParams(idSchema), users.getAnother)
+router.get('/dashboard/:userId', users.getDashboard)
 router.get('/another/:userId/feed/:page', validateParams(idSchema), feeds.getAnotherFeed)
 
 router.get('/feed/gethome/:page', feeds.getFeedHome)
