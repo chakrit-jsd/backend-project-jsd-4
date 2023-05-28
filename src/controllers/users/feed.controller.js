@@ -11,7 +11,7 @@ const getFeedHome = async (req, res, next) => {
     await req.user.populate({
       path: 'posts',
       populate: [
-        { path: 'author', select: 'profilename smallImgUrl' },
+        { path: 'author', select: 'profilename firstname lastname smallImgUrl' },
         { path: 'isLiked', match: { author: { $eq: req.user._id }}, select: 'author'},
         { path: 'likedCount'},
       ],
@@ -70,7 +70,7 @@ const getFeedAll = async (req, res, next) => {
     // console.log(arr)
     const targetPost = await Cards.find({author: arr})
     .populate([
-      { path: 'author', select: 'profilename smallImgUrl' },
+      { path: 'author', select: 'profilename firstname lastname smallImgUrl' },
       { path: 'isLiked', match: { author: { $eq: req.user._id }}, select: 'author'},
       { path: 'likedCount'},
     ])
@@ -113,6 +113,7 @@ const getFeedAll = async (req, res, next) => {
 }
 
 const getAnotherFeed = async (req, res, next) => {
+
   const userId = req.params.userId
   const page = req.params.page
   const limitPerpage = 3
@@ -130,7 +131,7 @@ const getAnotherFeed = async (req, res, next) => {
     await user.populate({
       path: 'posts',
       populate: [
-        { path: 'author', select: 'profilename smallImgUrl' },
+        { path: 'author', select: 'profilename firstname lastname smallImgUrl' },
         { path: 'isLiked', match: { author: { $eq: req.user._id }}, select: 'author'},
         { path: 'likedCount'},
       ],
@@ -173,7 +174,6 @@ const getAnotherFeed = async (req, res, next) => {
     next(error)
   }
 }
-
 
 module.exports = {
   getFeedHome,
