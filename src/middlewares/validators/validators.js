@@ -16,6 +16,7 @@ const validateBody = (schema) => async (req, res, next) => {
       file = req.body.file
       req.body.file = ''
     }
+
     await schema.validateAsync(req.body)
     req.body.file = file
     next()
