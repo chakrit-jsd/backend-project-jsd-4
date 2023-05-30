@@ -7,6 +7,6 @@ require('../models/Users.schema')
 
 
 module.exports = async () => {
-  mongoose.set('strictQuery', true)
+  // mongoose.set('strictQuery', true)
   await mongoose.connect(process.env.MONGOATLAST)
 }

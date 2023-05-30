@@ -38,15 +38,15 @@ const editCardSchema = Joi.object({
     }),
 
   file: Joi
-    .any(),
+    .strip(),
 
   cardId: Joi
     .string()
     .custom(
       (value, helpers) => {
-        console.log(value)
+        // console.log(value)
         const filtered = mongo.ObjectId.isValid(value)
-        console.log(filtered)
+        // console.log(filtered)
         return !filtered ? helpers.error("any.invalid") : value;
       },
         "invalid objectId" )

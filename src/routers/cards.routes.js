@@ -10,6 +10,7 @@ router.post('/create', validateBody(cardSchema), cards.postCreateCards)
 router.put('/edit', validateBody(editCardSchema), cards.putEditCards)
 router.delete('/delete/:cardId', validateParams(idSchema), cards.deleteCards)
 
-router.post('/liked', liked.postLiked)
+router.post('/liked', validateParams(idSchema), liked.postLiked)
+router.get('/liked/:cardId', validateParams(idSchema), liked.whoLikedCard)
 
 module.exports = router

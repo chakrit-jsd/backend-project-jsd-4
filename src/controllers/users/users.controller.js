@@ -149,8 +149,53 @@ const putProfileEdit = async (req, res, next) => {
   }
 }
 
+const getDashboard = async (req, res, next) => {
+  let userId = req.params.userId
+  if (userId === 'me') {
+    userId = req.user._id
+  }
+  try {
+    const userInfo = await Users.findById(userId).populate({path: 'posts', select: 'activity duration'})
+    const allActivity = userInfo.posts
+    const dashboard = {}
+    const genDashboardData = (obj) => {
+      if (dashboard[obj.activity]?.count === undefined || dashboard[obj.activity].timeSpent === undefined) {
+        dashboard[obj.activity] = {count: 0, timeSpent: 0}
+      }
+      dashboard[obj.activity] = {
+        count: dashboard[obj.activity].count + 1,
+        timeSpent: dashboard[obj.activity].timeSpent + obj.duration
+      }
+    }
+
+    function toHoursAndMinutes(totalMinutes) {
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      return { hours, minutes };
+    }
+
+    let totalTimeSpent = 0
+    for (const activity of allActivity) {
+      genDashboardData(activity)
+      totalTimeSpent += activity.duration
+    }
+    for (const activity in dashboard) {
+      dashboard[activity].percentage = ((dashboard[activity].timeSpent / totalTimeSpent) * 100).toFixed(0)
+      dashboard[activity].timeSpent = toHoursAndMinutes(dashboard[activity].timeSpent)
+    }
+    dashboard.totalTimeSpent = totalTimeSpent
+
+    // console.log(totalTimeSpent)
+    // console.log(dashboard)
+    res.status(200).json({dashboard: dashboard})
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getMe,
   getAnother,
-  putProfileEdit
+  putProfileEdit,
+  getDashboard,
 }

@@ -36,7 +36,7 @@ const CardsSchema = new Schema({
       const d = DateTime.fromJSDate(date)
       return {
         date: date,
-        dateFormat: DateTime.fromISO(d).toFormat('dd LLLL')
+        dateFormat: DateTime.fromISO(d).toFormat('dd LLLL'),
       }
     }
   },
@@ -74,6 +74,5 @@ CardsSchema.virtual('likedCount',
   count: true
 })
 CardsSchema.virtual('isLiked',LikedOption)
-
 
 module.exports = model('Cards', CardsSchema)

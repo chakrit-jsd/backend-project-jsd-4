@@ -6,8 +6,10 @@ const errorsHandle = require('./middlewares/errorHandle/errorsHandler')
 
 const app = express()
 
+
 // usePassport
-app.use('/public', express.static(path.join(__dirname, '../public')))
+app.set('trust proxy', true)
+app.use('/api/public', express.static(path.join(__dirname, '../public')))
 require('./middlewares/passposts/usePassport')
 app.use(appMiddlewares)
 
