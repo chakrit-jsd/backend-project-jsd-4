@@ -6,7 +6,7 @@ const { SLACK_CLIENT_ID, SCACK_CLIENT_SECRET } = process.env
 const slackStrategy = new SlackStrategy({
   clientID: SLACK_CLIENT_ID,
   clientSecret: SCACK_CLIENT_SECRET,
-  callbackURL: 'https://nestfit.life',
+  callbackURL: 'https://nestfit-api.life/api/login/slack/callback',
   scope: ['identity.basic', 'identity.email', 'identity.avatar']
 },
   async (accessToken, refreshToken, profile, next) => {
