@@ -20,6 +20,22 @@ const postLogin = (req, res, next) => {
   })(req, res, next)
 }
 
+const getSlackLogin = (req, res, next) => {
+  console.log('slack get')
+  passport.authenticate('slack', (err, user) => {
+
+    res.status(200).json({message: 'slack 1'})
+  })(req, res, next)
+}
+const getSlackLoginCb = (req, res, next) => {
+  console.log('slack get 2')
+  passport.authenticate('slack', (err, user) => {
+    console.log(user)
+    res.status(200)
+  })(req, res, next)
+}
+
+
 const getLogout = (req, res, next) => {
   req.logout((err) => {
     if (err) next(err)
@@ -30,5 +46,7 @@ const getLogout = (req, res, next) => {
 module.exports = {
   getLogin,
   postLogin,
+  getSlackLogin,
+  getSlackLoginCb,
   getLogout
 }

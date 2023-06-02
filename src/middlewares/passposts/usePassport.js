@@ -1,8 +1,10 @@
 const passport = require('passport')
 const local = require('./strategies/local.strategy')
+const slack = require('./strategies/slack.stategy')
 const Users = require('../../models/Users.schema')
 
 passport.use(local)
+passport.use(slack)
 
 passport.serializeUser((user, next) => {
   // console.log('serial')
