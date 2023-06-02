@@ -10,6 +10,9 @@ const loginUserSchema = require('../middlewares/validators/schema/loginUser.sche
 
 router.get('/login', checkLogin.plzLogout, login.getLogin)
 router.post('/login', [checkLogin.plzLogout, validateBody(loginUserSchema)], login.postLogin)
+router.get('/login/slack', login.getSlackLogin)
+router.get('/login/slack/callback', login.getSlackLoginCb)
+
 
 router.get('/register', checkLogin.plzLogout, register.getRegister)
 router.post('/register', [checkLogin.plzLogout, validateBody(userSchema)], register.postRegister)
