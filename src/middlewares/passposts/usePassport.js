@@ -47,6 +47,7 @@ passport.use(new SlackStrategy({
           auth: { 'slack': { id: profile.id }},
           createAt: Date.now()
         })
+        console.log(userCreate)
         return done(null, userCreate)
       }
       if(user && !user.auth.slack) {
