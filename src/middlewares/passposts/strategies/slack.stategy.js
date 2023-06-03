@@ -1,12 +1,12 @@
 const SlackStrategy = require('passport-slack').Strategy
 const Users = require('../../../models/Users.schema')
 
-const { SLACK_CLIENT_ID, SCACK_CLIENT_SECRET } = process.env
+const { SLACK_CLIENT_ID, SCACK_CLIENT_SECRET, SLACK_CALLBACK } = process.env
 
 const slackStrategy = new SlackStrategy({
   clientID: SLACK_CLIENT_ID,
   clientSecret: SCACK_CLIENT_SECRET,
-  callbackURL: 'https://nestfit-api.life/api/login/slack/callback',
+  callbackURL: SLACK_CALLBACK,
   scope: ['identity.basic', 'identity.email', 'identity.avatar']
 },
   async (accessToken, refreshToken, profile, next) => {
