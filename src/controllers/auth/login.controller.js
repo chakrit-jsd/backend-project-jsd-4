@@ -28,7 +28,7 @@ const getSlackLoginCb = (req, res, next) => {
   console.log('slack get 2')
   passport.authenticate('slack', (err, user) => {
     console.log('au 2')
-    console.log(user)
+    console.log(typeof user)
     res.status(302).redirect(`${process.env.CLIENT_ORIGIN}/me`)
   })(req, res, next)
 }

@@ -9,21 +9,12 @@ const slackStrategy = new SlackStrategy({
   callbackURL: SLACK_CALLBACK,
   skipUserProfile: false,
   scope: ['identity.basic', 'identity.email', 'identity.avatar']
-},
-  async (accessToken, scopes, profiles, next) => {
-    try {
+}, (accessToken, refreshToken, profile, done) => {
       console.log('au 1')
       console.log(accessToken)
-      console.log(scopes)
-      console.log(profiles)
-      const res = await profiles
-      console.log(res)
-      next(null, profiles)
+      console.log(profile.id)
 
-    } catch (error) {
-      next(error)
-    }
-  }
-)
+      done(null, profile)
+  })
 
 module.exports = slackStrategy
