@@ -41,11 +41,11 @@ appMiddlewares.use(cors({
 // content-type urlencoded and JSON
 appMiddlewares.use(compression())
 appMiddlewares.use(express.urlencoded({ extended: true }))
-// appMiddlewares.use(express.json({ limit: '11mb'}))
+appMiddlewares.use(express.json({ limit: '11mb'}))
 // appMiddlewares.use(cookieParser())
 appMiddlewares.use(session(sessionOptions))
 appMiddlewares.use(passport.initialize())
-appMiddlewares.use(require('body-parser').urlencoded({ extended: true }))
+// appMiddlewares.use(require('body-parser').urlencoded({ extended: true }))
 appMiddlewares.use(passport.session())
 // appMiddlewares.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', req.headers.origin);
