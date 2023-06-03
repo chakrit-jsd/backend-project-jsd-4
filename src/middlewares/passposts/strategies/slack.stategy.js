@@ -7,6 +7,7 @@ const slackStrategy = new SlackStrategy({
   clientID: SLACK_CLIENT_ID,
   clientSecret: SCACK_CLIENT_SECRET,
   callbackURL: SLACK_CALLBACK,
+  skipUserProfile: false,
   scope: ['identity.basic', 'identity.email', 'identity.avatar']
 },
   async (accessToken, refreshToken, profile, next) => {
