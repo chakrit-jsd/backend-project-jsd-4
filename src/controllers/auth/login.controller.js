@@ -23,6 +23,9 @@ const postLogin = (strategy) => (req, res, next) => {
       if (err) {
         return next(err)
       }
+      if(strategy === 'slack') {
+        return res.redirect('https://nestfit.life')
+      }
       res.status(200).json({message: 'Login Success'})
     })
   })(req, res, next)
