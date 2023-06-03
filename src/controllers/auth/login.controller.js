@@ -12,13 +12,10 @@ const postLogin = (strategy) => (req, res, next) => {
     if (err) {
       return next(err)
     }
-    if(strategy === 'slack') {
-      console.log(req.sessionId)
-      passport.serializeUser((user, done) => {
-        return done(null, user._id)
-      })
-      return res.redirect('https://nestfit.life')
-    }
+    // if(strategy === 'slack') {
+    //   console.log(req.sessionId)
+    //   return res.redirect('https://nestfit.life')
+    // }
     req.login(user, (err) => {
       if (err) {
         return next(err)
