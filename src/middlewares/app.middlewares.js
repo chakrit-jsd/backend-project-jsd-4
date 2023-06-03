@@ -40,6 +40,7 @@ appMiddlewares.use(cors({
 // console.log(process.env.CLIENT_ORIGIN)
 // content-type urlencoded and JSON
 appMiddlewares.use(compression())
+appMiddlewares.use(require('body-parser').urlencoded({ extended: true }))
 appMiddlewares.use(express.urlencoded({ extended: true }))
 appMiddlewares.use(express.json({ limit: '11mb'}))
 // appMiddlewares.use(cookieParser())

@@ -31,9 +31,9 @@ passport.use('slack', new SlackStrategy({
   clientSecret: SCACK_CLIENT_SECRET,
   callbackURL: SLACK_CALLBACK,
   skipUserProfile: false,
-  passReqToCallback: true,
+  // passReqToCallback: true,
   scope: ['identity.basic', 'identity.email', 'identity.avatar']
-}, (req, accessToken, refreshToken, profile, next) => {
+}, (accessToken, refreshToken, profile, next) => {
       console.log('au 1')
       console.log(req.user)
       console.log(accessToken)
