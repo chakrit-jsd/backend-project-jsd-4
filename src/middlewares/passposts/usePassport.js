@@ -34,12 +34,17 @@ passport.use('slack', new SlackStrategy({
   // passReqToCallback: true,
   scope: ['identity.basic', 'identity.email', 'identity.avatar']
 }, (accessToken, refreshToken, profile, next) => {
+    try {
       console.log('au 1')
       console.log(req.user)
       console.log(accessToken)
       console.log(profile.id)
       console.log(profile)
       next(null, profile)
+
+    } catch (error) {
+      next(error)
+    }
   }))
 // passport.use('local', localStrategy)
 // passport.use('slack', slackStrategy)
