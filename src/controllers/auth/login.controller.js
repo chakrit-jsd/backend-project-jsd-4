@@ -22,17 +22,14 @@ const postLogin = (req, res, next) => {
 
 const getSlackLogin = (req, res, next) => {
   console.log('slack get')
-  passport.authenticate('slack', (err, user) => {
-
-    res.status(200).json({message: 'slack 1'})
-  })(req, res, next)
+  passport.authenticate('slack')
 }
 const getSlackLoginCb = (req, res, next) => {
   console.log('slack get 2')
   passport.authenticate('slack', (err, user) => {
     console.log('au 2')
     console.log(user)
-    res.status(302).redirect(process.env.CLIENT_ORIGIN + '/me')
+    res.status(302).redirect(`${process.env.CLIENT_ORIGIN}/me`)
   })(req, res, next)
 }
 
