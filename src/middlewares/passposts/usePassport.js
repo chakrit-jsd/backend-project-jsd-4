@@ -47,13 +47,14 @@ passport.use(new SlackStrategy({
           auth: { 'slack': { id: profile.id }},
           createAt: Date.now()
         })
+        return done(null, userCreate)
       }
       if(user && !user.auth.slack) {
         user.auth.slack = { id: profile.id }
         await user.save()
       }
 
-      done(null, user || userCreate)
+      done(null, user)
 
     } catch (error) {
       done(error)
