@@ -14,6 +14,9 @@ const postLogin = (strategy) => (req, res, next) => {
     }
     if(strategy === 'slack') {
       console.log(req.session)
+      passport.serializeUser((user, done) => {
+        return done(null, user._id)
+      })
       return res.redirect('https://nestfit.life')
     }
     req.login(user, (err) => {
