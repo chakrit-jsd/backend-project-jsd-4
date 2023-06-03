@@ -7,7 +7,7 @@ const getLogin = (req, res) => {
 
 const postLogin = (strategy) => (req, res, next) => {
   passport.authenticate(strategy, (err, user) => {
-    // console.log('login')
+    console.log('login', strategy)
     if (err) {
       return next(err)
     }

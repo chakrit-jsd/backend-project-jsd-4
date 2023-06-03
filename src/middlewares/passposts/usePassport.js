@@ -26,7 +26,7 @@ const { SLACK_CLIENT_ID, SCACK_CLIENT_SECRET, SLACK_CALLBACK } = process.env
 //   }
 // }))
 
-passport.use('slack', new SlackStrategy({
+passport.use(new SlackStrategy({
   clientID: SLACK_CLIENT_ID,
   clientSecret: SCACK_CLIENT_SECRET,
   callbackURL: SLACK_CALLBACK,
