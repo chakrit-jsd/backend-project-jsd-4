@@ -32,7 +32,7 @@ const getSlackLoginCb = (req, res, next) => {
   passport.authenticate('slack', (err, user) => {
     console.log('au 2')
     console.log(user)
-    res.status(200).json({ message: 'au 2 succ'})
+    res.status(302).redirect(process.env.CLIENT_ORIGIN + '/me')
   })(req, res, next)
 }
 
