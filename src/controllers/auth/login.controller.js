@@ -12,10 +12,13 @@ const postLogin = (strategy) => (req, res, next) => {
     if (err) {
       return next(err)
     }
-    // if(strategy === 'slack') {
-    //   console.log(req.sessionId)
-    //   return res.redirect('https://nestfit.life')
-    // }
+    if(strategy === 'slack') {
+      console.log(req.sessionId)
+      req.logIn(user, (err) => {
+        console.log(err)
+        return res.redirect('https://nestfit.life')
+      })
+    }
     req.login(user, (err) => {
       if (err) {
         return next(err)
