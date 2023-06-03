@@ -10,12 +10,18 @@ const slackStrategy = new SlackStrategy({
   scope: ['identity.basic', 'identity.email', 'identity.avatar']
 },
   async (accessToken, refreshToken, profile, next) => {
-    console.log('au 1')
-    console.log(accessToken)
-    console.log(refreshToken)
-    console.log(profile)
-    const res = await profile
-    next(null, profile)
+    try {
+      console.log('au 1')
+      console.log(accessToken)
+      console.log(refreshToken)
+      console.log(profile)
+      const res = await profile
+      console.log(res)
+      next(null, profile)
+
+    } catch (error) {
+      next(error)
+    }
   }
 )
 
