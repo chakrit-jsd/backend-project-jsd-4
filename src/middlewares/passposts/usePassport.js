@@ -33,17 +33,17 @@ passport.use(new SlackStrategy({
   skipUserProfile: false,
   passReqToCallback: true,
   scope: ['identity.basic', 'identity.email', 'identity.avatar', 'identity.team']
-}, async (accessToken, refreshToken, profile, next) => {
+}, async (accessToken, refreshToken, profile, done) => {
     try {
       console.log('au 1')
-      console.log(req.user)
+      // console.log(req.user)
       console.log(accessToken)
       console.log(profile.id)
       console.log(profile)
-      next(null, profile)
+      done(null, profile)
 
     } catch (error) {
-      next(error)
+      done(error)
     }
   }))
 // passport.use('local', localStrategy)
