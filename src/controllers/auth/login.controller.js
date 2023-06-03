@@ -30,6 +30,7 @@ const getSlackLogin = (req, res, next) => {
 const getSlackLoginCb = (req, res, next) => {
   console.log('slack get 2')
   passport.authenticate('slack', (err, user) => {
+    console.log('au 2')
     console.log(user)
     res.status(200)
   })(req, res, next)
