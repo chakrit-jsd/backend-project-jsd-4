@@ -11,9 +11,9 @@ const multer = require('multer');
 
 
 router.get('/login', checkLogin.plzLogout, login.getLogin)
-router.post('/login', [checkLogin.plzLogout, validateBody(loginUserSchema)], login.postLogin)
+router.post('/login', [checkLogin.plzLogout, validateBody(loginUserSchema)], login.postLogin('local'))
 router.get('/login/slack', passport.authenticate('slack'))
-router.get('/login/slack/callback',multer().none() ,login.getSlackLoginCb)
+router.get('/login/slack/callback', login.postLogin('slack'))
 
 
 router.get('/register', checkLogin.plzLogout, register.getRegister)

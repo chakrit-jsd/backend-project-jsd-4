@@ -1,7 +1,7 @@
-const { Strategy } = require('passport-local')
+const LocalStrategy = require('passport-local').Strategy
 const Users = require('../../../models/Users.schema')
 
-const localStrategy = new Strategy({
+const localStrategy = new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   session: true
