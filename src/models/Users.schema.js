@@ -11,8 +11,7 @@ const UsersSchema = new Schema({
     lowercase: true
   },
   password: {
-    type: String,
-    require: true
+    type: String
   },
   aboutme: {
     type: String,
@@ -31,10 +30,7 @@ const UsersSchema = new Schema({
     max: 20,
   },
   lastname: {
-    type: String,
-    require: true,
-    min: 4,
-    max: 20,
+    type: String
   },
   profilename: {
     type: String,
@@ -42,7 +38,6 @@ const UsersSchema = new Schema({
   },
   birthdate: {
     type: Date,
-    require: true,
     get (date) {
       return DateTime.fromJSDate(date)
     }
@@ -65,6 +60,9 @@ const UsersSchema = new Schema({
   },
   smallImgUrl: {
     type: String
+  },
+  auth: {
+    type: Object
   },
   createAt: {
     type: Date,

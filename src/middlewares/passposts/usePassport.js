@@ -35,12 +35,25 @@ passport.use(new SlackStrategy({
   scope: ['identity.basic', 'identity.email', 'identity.avatar', 'identity.team']
 }, async (accessToken, refreshToken, params, profile, done) => {
     try {
-      console.log('au 1')
-      // console.log(req.user)
-      // console.log(accessToken)
-      // console.log(profile.id)
-      console.log('aut pro', profile)
-      done(null, profile)
+      const user = await Users.findOne({ email: profile.email })
+
+      if (!user) {
+        const userCreate = await Users.create({
+          email: profile.user.email,
+          firstname: profile.displayName,
+          profilename: profile.displayName,
+          profileImgUrl: profile.user.image_192,
+          smallImgUrl: profile.user.image_32,
+          auth: { 'slack': { id: profile.id }},
+          createAt: Date.now()
+        })
+      }
+      if(user && !user.auth.slack) {
+        user.auth.slack = { id: profile.id }
+        await user.save()
+      }
+
+      done(null, user || userCreate)
 
     } catch (error) {
       done(error)
