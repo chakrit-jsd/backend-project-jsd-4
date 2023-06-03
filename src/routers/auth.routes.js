@@ -5,12 +5,13 @@ const checkLogin = require('../middlewares/checkLogin/checkLogin')
 const { validateBody } = require('../middlewares/validators/validators')
 const userSchema = require('../middlewares/validators/schema/_user.schema')
 const loginUserSchema = require('../middlewares/validators/schema/loginUser.schema')
+const passport = require('passport')
 
 
 
 router.get('/login', checkLogin.plzLogout, login.getLogin)
 router.post('/login', [checkLogin.plzLogout, validateBody(loginUserSchema)], login.postLogin)
-router.get('/login/slack', login.getSlackLogin)
+router.get('/login/slack', passport.authenticate('slack'))
 router.get('/login/slack/callback', login.getSlackLoginCb)
 
 
