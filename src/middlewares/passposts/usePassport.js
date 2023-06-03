@@ -35,7 +35,7 @@ passport.use(new SlackStrategy({
   scope: ['identity.basic', 'identity.email', 'identity.avatar', 'identity.team']
 }, async (req, accessToken, refreshToken, params, profile, done) => {
     try {
-      const user = await Users.findOne({ email: profile.email })
+      const user = await Users.findOne({ email: profile.user.email })
       console.log(req.user)
       if (!user) {
         const userCreate = await Users.create({
@@ -54,8 +54,8 @@ passport.use(new SlackStrategy({
         user.auth.slack = { id: profile.id }
         await user.save()
       }
-
       done(null, user)
+
 
     } catch (error) {
       done(error)
