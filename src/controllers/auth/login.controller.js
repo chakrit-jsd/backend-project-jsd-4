@@ -13,7 +13,7 @@ const postLogin = (strategy) => (req, res, next) => {
       return next(err)
     }
     if(strategy === 'slack') {
-      console.log(req.session)
+      console.log(req.sessionId)
       passport.serializeUser((user, done) => {
         return done(null, user._id)
       })
