@@ -31,7 +31,7 @@ const cardSchema = Joi.object({
   dateactivity: Joi
     .date()
     .required()
-    .max(new Date())
+    .max(Date.now)
     .messages({
       'date.max': 'Invalid Date'
     }),
