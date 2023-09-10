@@ -66,13 +66,14 @@ passport.use(new SlackStrategy({
 
 passport.serializeUser((user, next) => {
   // console.log('serial')
-  return next(null, user._id)
+  return next(null, user.id)
 })
 
 passport.deserializeUser(async (id, next) => {
   try {
-    // console.log('deserial')
+    console.log('deserial')
     const user = await Users.findById(id)
+    // console.log(user)
     // if (user) console.log('user')
     if (!user) throw {resError : [404, 'User Not Found c-pass']}
     if (!id) return console.log('not IDDDD')
