@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 //const SlackStrategy = require('passport-slack').Strategy
 //const Users = require('../../../models/Users.schema')
 
@@ -20,6 +21,8 @@
 
 //module.exports = slackStrategy
 =======
+=======
+>>>>>>> c16908db3ed50f6a3b6cdb4eec81f98fed98ffb8
 // const SlackStrategy = require('passport-slack').Strategy
 // const Users = require('../../../models/Users.schema')
 
@@ -40,4 +43,7 @@
 //   })
 
 // module.exports = slackStrategy
+<<<<<<< HEAD
 >>>>>>> c4b22c9cc2ed57524d09e7a1df472a7f8112b25d
+=======
+>>>>>>> c16908db3ed50f6a3b6cdb4eec81f98fed98ffb8

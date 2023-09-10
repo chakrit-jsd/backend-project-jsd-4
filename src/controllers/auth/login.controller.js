@@ -12,21 +12,21 @@ const postLogin = (strategy) => (req, res, next) => {
     if (err) {
       return next(err)
     }
-    // if(strategy === 'slack') {
-    //   console.log(req.sessionId)
-    //   req.logIn(user, (err) => {
-    //     console.log(err)
-    //     return res.redirect('https://nestfit.life')
-    //   })
-    // }
+ //   if(strategy === 'slack') {
+//       console.log(req.sessionId)
+//       req.logIn(user, (err) => {
+//         console.log(err)
+//         return res.redirect('https://nestfit.life')
+//       })
+//     }
     req.login(user, (err) => {
 
       if (err) {
         return next(err)
       }
-      // if(strategy === 'slack') {
-      //   return res.redirect('https://nestfit.life')
-      // }
+       if(strategy === 'slack') {
+        return res.redirect('https://nestfit.life')
+       }
       console.log(req.user)
       res.status(200).json({message: 'Login Success'})
     })
