@@ -193,9 +193,20 @@ const getDashboard = async (req, res, next) => {
   }
 }
 
+const getUserById = async (req, res, next) => {
+  const userId = req.params.userId
+  try {
+    const user = await Users.findById(userId)
+    return res.status(200).json({ user })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getMe,
   getAnother,
   putProfileEdit,
   getDashboard,
+  getUserById,
 }
