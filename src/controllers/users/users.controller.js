@@ -197,7 +197,12 @@ const getUserById = async (req, res, next) => {
   const userId = req.params.userId
   try {
     const user = await Users.findById(userId)
-    return res.status(200).json({ user })
+
+    return res.status(200).json({
+      _id: user.id,
+      profilename: user.profilename || user.firstname + '' + user.lastname,
+      smallImgUrl: user.smallImgUrl,
+     })
   } catch (error) {
     next(error)
   }
