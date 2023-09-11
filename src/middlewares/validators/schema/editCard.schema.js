@@ -32,7 +32,7 @@ const editCardSchema = Joi.object({
   dateactivity: Joi
     .date()
     .required()
-    .max(Date.now())
+    .max('now')
     .messages({
       'date.max': 'Invalid Date'
     }),
