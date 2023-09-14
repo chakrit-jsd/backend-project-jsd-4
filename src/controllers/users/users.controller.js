@@ -202,6 +202,7 @@ const getUserById = async (req, res, next) => {
       _id: user.id,
       profilename: user.profilename || user.firstname + '' + user.lastname,
       smallImgUrl: user.smallImgUrl,
+      profileImgUrl: user.profileImgUrl
      })
   } catch (error) {
     next(error)
