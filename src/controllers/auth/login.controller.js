@@ -7,25 +7,27 @@ const getLogin = (req, res) => {
 
 const postLogin = (strategy) => (req, res, next) => {
   passport.authenticate(strategy, (err, user) => {
-    console.log('login', strategy)
-    // console.log(user)
+    // console.log('login', user)
+
     if (err) {
       return next(err)
     }
-    // if(strategy === 'slack') {
-    //   console.log(req.sessionId)
-    //   req.logIn(user, (err) => {
-    //     console.log(err)
-    //     return res.redirect('https://nestfit.life')
-    //   })
-    // }
+ //   if(strategy === 'slack') {
+//       console.log(req.sessionId)
+//       req.logIn(user, (err) => {
+//         console.log(err)
+//         return res.redirect('https://nestfit.life')
+//       })
+//     }
     req.login(user, (err) => {
+
       if (err) {
         return next(err)
       }
-      if(strategy === 'slack') {
+       if(strategy === 'slack') {
         return res.redirect('https://nestfit.life')
-      }
+       }
+      console.log(req.user)
       res.status(200).json({message: 'Login Success'})
     })
   })(req, res, next)

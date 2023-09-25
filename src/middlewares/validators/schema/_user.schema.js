@@ -55,7 +55,7 @@ const userSchema = Joi.object({
   birthdate: Joi
     .date()
     .required()
-    .max(new Date())
+    .max('now')
     .messages({
       'date.max': 'Invalid Birth Date'
     }),
